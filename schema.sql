@@ -15,6 +15,7 @@ CREATE TABLE restaurants (
 );
 
 CREATE TABLE comments (
+
     id INT AUTO_INCREMENT PRIMARY KEY,
     restaurant_id INT NOT NULL,
     user_id INT NOT NULL,
@@ -26,3 +27,7 @@ CREATE TABLE comments (
 
 INSERT INTO restaurants (name, description) VALUES ('Restaurant A', 'Known for its cozy atmosphere and classic dishes.');
 INSERT INTO restaurants (name, description) VALUES ('Restaurant B', 'Famous for innovative fusion cuisine and modern decor.');
+
+select * from comments;
+select * from users;
+select * from restaurants;

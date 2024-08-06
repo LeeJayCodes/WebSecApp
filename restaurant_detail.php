@@ -57,6 +57,17 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo htmlspecialchars($restaurant['name']); ?></title>
+    <script>
+        // Input sanitization for secured Implementation
+        function sanitizeInput(input) {
+            return input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        function validateForm(event) {
+            let comment = document.querySelector('textarea[name="comment"]');
+            comment.value = sanitizeInput(comment.value);
+        }
+    </script>
 </head>
 <body>
     <h1><?php echo htmlspecialchars($restaurant['name']); ?></h1>
@@ -67,7 +78,14 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php foreach ($comments as $comment): ?>
         <p>
             <strong><?php echo htmlspecialchars($comment['username']); ?>:</strong>
-            <?php echo htmlspecialchars($comment['comment']); ?>
+
+            <!-- Vulnerable to XSS -->
+            <p><?php echo $comment['comment']; ?></p>
+
+            
+            <!-- Secured to XSS -->
+            <!-- <p><?php echo htmlspecialchars($comment['comment']); ?></p> -->
+
             <?php if (isset($comment['user_id']) && $_SESSION['user_id'] == $comment['user_id']): ?>
                 <a href="edit_comment.php?id=<?php echo $comment['id']; ?>">Edit</a>
             <?php endif; ?>
@@ -78,10 +96,21 @@ $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <?php endif; ?>
 
     <h2>Add a Comment:</h2>
+    <!-- Vulnerable to XSS -->
+    <!-- <script>alert('XSS attack!');</script> -->
     <form action="restaurant_detail.php?id=<?php echo htmlspecialchars($restaurantId); ?>" method="post">
         <textarea name="comment" required></textarea>
         <button type="submit">Submit Comment</button>
+
     </form>
+
+    <!-- Secured to XSS -->
+    <!-- <form action="restaurant_detail.php?id=<?php echo htmlspecialchars($restaurantId); ?>" method="post" onsubmit="validateForm(event)">
+        <textarea name="comment" required></textarea>
+        <button type="submit">Submit Comment</button>
+    </form> -->
+
+
     <a href="restaurant_list.php" class="btn">Back to List</a>
     <form action="sign_out.php" method="post">
         <button type="submit">Sign Out</button>

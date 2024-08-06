@@ -7,14 +7,19 @@ function addUser($username, $password) {
 
     // Prepare SQL statement to prevent SQL injection
     $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
-
-    // Hash the password for security
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
+    
+    // Vulnerable Implementation - Saving the password as plain text
     // Bind parameters and execute
     $stmt->bindParam(':username', $username);
-    $stmt->bindParam(':password', $password); // $hashed_password
+    $stmt->bindParam(':password', $password); 
     $stmt->execute();
+
+    // //Secured Implementation - Hasing the password
+    // $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    // // Bind parameters and execute
+    // $stmt->bindParam(':username', $username);
+    // $stmt->bindParam(':password', $hashed_password); 
+    // $stmt->execute();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
