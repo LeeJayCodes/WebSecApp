@@ -14,7 +14,7 @@ function addUser($username, $password) {
     $stmt->bindParam(':password', $password); 
     $stmt->execute();
 
-    // //Secured Implementation - Hasing the password
+    //Secured Implementation - Hasing the password
     // $hashed_password = password_hash($password, PASSWORD_DEFAULT);
     // // Bind parameters and execute
     // $stmt->bindParam(':username', $username);

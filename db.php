@@ -3,7 +3,7 @@ function getDbConnection() {
     $host = 'localhost';
     $dbname = 'WebSecApp'; // Change this to your database name if you have one, Create one if you don't have database
     $user = 'root';
-    $pass = '1234'; // Change this to your database password if you have one
+    $pass = 'seyed313'; // Change this to your database password if you have one
 
     $dsn = "mysql:host=$host;dbname=$dbname";
     try {
@@ -15,4 +15,3 @@ function getDbConnection() {
         exit;
     }
 }
-?>

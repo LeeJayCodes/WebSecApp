@@ -34,6 +34,7 @@ require 'db.php'; // Include your database connection file
     
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         // for hashed password use password_verify($password, $user['password']) for condition
+        
         if ($password === $user['password']) { // Use direct comparison for plain text passwords
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $username;
@@ -42,6 +43,17 @@ require 'db.php'; // Include your database connection file
         } else {
             die("Debug: Password does not match."); // Stop execution and show message
         }
+
+        //Hashed
+
+        // if (password_verify($password, $user['password'])) {
+        //     $_SESSION['loggedin'] = true;
+        //     $_SESSION['username'] = $username;
+        //     $_SESSION['user_id'] = $user['id']; // Storing user_id in the session
+        //     return true;
+        // } else {
+        //     die("Debug: Password does not match."); // Stop execution and show message
+        // }
     }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -63,4 +75,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: index.php");
     exit;
 }
-?>
